@@ -2,9 +2,9 @@ package routers
 
 import "net/http"
 
-var UserRouter = http.NewServeMux()
+func UserRoutes() *http.ServeMux {
+	UserRouter := http.NewServeMux()
 
-func init() {
 	UserRouter.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("User"))
 	})
@@ -23,4 +23,6 @@ func init() {
 	UserRouter.HandleFunc("/profile/edit/password/confirm/submit", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Profile Edit Password Confirm Submit"))
 	})
+
+	return UserRouter
 }

@@ -5,6 +5,7 @@ import (
 	"go-prac/routers"
 	"log"
 	"net/http"
+	"strings"
 )
 
 func Start() {
@@ -13,11 +14,11 @@ func Start() {
 
 	masterMux.HandleFunc("/health", healthHandler)
 	masterMux.HandleFunc("/", homeHandler)
-	masterMux.Handle("/user/", http.StripPrefix("/user", routers.UserRouter))
+	masterMux.Handle("/user/", http.StripPrefix("/user", routers.UserRoutes()))
 
-	port := ":8080"
+	port := ":65535"
 
-	fmt.Println("Server is started at port", port)
+	fmt.Println("Server is started at port", strings.Join(strings.Split(port, ":"), ""))
 	// if can get more than one statement in go, one usally to create a variable
 	// and second for check condition for true and false
 	// this is help in not populiting the global scope and keep err check related variables in
@@ -37,6 +38,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	// Write data to tcp connection
 	w.Write([]byte(`{"message":"Welcome 👋"}`))
 }
+
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
